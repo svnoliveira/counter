@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter</title>
+</head>
+<body>
+    <main>
+        <p id="item-counter">
+            Restam <span id="quantity">0</span> <span id="unidade">unidades</span> com até <b>44% OFF</b>
+        </p>
+    </main>
+</body>
+<script>
+    const quantity = document.getElementById('quantity');
+    let value = localStorage.getItem('gp-number');
+
+    quantity.innerText = value || 28;
+
+    const seconds = [
+        0,          //0
+        33000,      //1
+        68000,      //2
+        80000,      //3
+        113000,     //4
+        133000,     //5
+        153000,     //6
+        200000,     //7
+        210000,     //8
+        225000,     //9
+        250000,     //10
+        275000,     //11
+        284000,     //12
+        317000,     //13
+        350000,     //14
+        356000,     //15
+        358000,     //16
+        382000,     //17
+        415000,     //18
+        485000,     //19
+        635000,     //20
+        650000,     //21
+        655000,     //22
+        670000,     //23
+        770000,     //24
+        810000,     //25
+        860000,     //26
+        875000,     //27
+        900000      //28
+    ]
+
+    const startTimer = (currentValue) => {
+        if (!currentValue) {
+            localStorage.setItem('gp-number', 28);
+            quantity.innerText = 28;
+            startTimer(28);
+        } else {
+            currentValue = parseInt(currentValue);
+            const nextValue = currentValue - 1;
+            const timer = seconds[currentValue] - seconds[nextValue];
+            if (currentValue <= 1) {
+                const quantityText = document.getElementById('unidade');
+                quantityText.innerText = 'unidade';
+                return
+            }
+    
+            setTimeout(() => {
+                localStorage.setItem('gp-number', nextValue);
+                quantity.innerText = nextValue;
+                startTimer(nextValue);
+            }, timer)
+        }
+    }
+
+    startTimer(value);
+</script>
+</html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    main {
+        background-color:#F0602C;
+        height: 90vh;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    #item-counter {
+        font-family: "Poppins", sans-serif;
+        font-style: italic;
+        font-size: 16px;
+        color: white;
+    }
+
+    #item-counter > b,
+    #quantity {
+        font-weight: 900;
+    }
+
+    #quantity {
+        color: #E5BC28;
+    }
+</style>
+
